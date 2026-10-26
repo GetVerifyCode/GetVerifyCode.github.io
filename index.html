@@ -4,114 +4,382 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OTP / SMS Verification Testing Checklist | GetVerifyCode</title>
-  <meta name="description" content="A practical, vendor-neutral checklist for QA engineers and developers who test SMS one-time-passcode (OTP) flows in staging before release.">
+  <meta name="description" content="Vendor-neutral QA checklist for SMS OTP flows. Input formatting, delivery timing, validation, and security checks for staging before release.">
   <link rel="canonical" href="https://getverifycode.github.io/">
+  <meta property="og:title" content="OTP / SMS Verification Testing Checklist">
+  <meta property="og:description" content="Vendor-neutral QA checklist for SMS one-time-passcode flows in staging.">
+  <meta property="og:url" content="https://getverifycode.github.io/">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #14212b;
-      --muted: #5a6b76;
-      --line: #d7dee3;
-      --paper: #f7f9fa;
-      --accent: #0b6e4f;
+      --ink: #101820;
+      --muted: #4d5d68;
+      --line: #d5dde5;
+      --paper: #f4f7f8;
+      --panel: #ffffff;
+      --accent: #0a6b52;
+      --accent-soft: #e6f4ef;
+      --sidebar: #15202b;
+      --sidebar-text: #d7e0e7;
+      --focus: #0a6b52;
+      --ok: #0a6b52;
+      --shadow: 0 10px 30px rgba(16, 24, 32, 0.08);
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+      font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
       font-size: 1rem;
       color: var(--ink);
-      background: linear-gradient(180deg, #eef3f6 0%, var(--paper) 220px, #fff 100%);
-      line-height: 1.55;
+      background: var(--paper);
+      line-height: 1.6;
     }
-    main {
-      max-width: 44rem;
+    ::selection { background: #cfe8de; color: var(--ink); }
+    a { color: var(--accent); text-underline-offset: 0.15em; }
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    .side {
+      background: var(--sidebar);
+      color: var(--sidebar-text);
+      padding: 1.5rem 1.1rem 2rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1.75rem;
+      padding: 0 0.4rem;
+    }
+    .brand strong {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: 1.35rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .brand span { font-size: 0.85rem; color: #9aafbd; }
+    .side nav { display: grid; gap: 0.25rem; }
+    .side a {
+      color: var(--sidebar-text);
+      text-decoration: none;
+      padding: 0.45rem 0.55rem;
+      border-radius: 8px;
+      font-size: 0.92rem;
+    }
+    .side a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .side .meta {
+      margin-top: 1.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.82rem;
+      color: #9aafbd;
+    }
+    .side .meta a { color: #9fd0bc; padding: 0; }
+    .content { padding: 2rem 1.5rem 4rem; }
+    .doc {
+      max-width: 48rem;
       margin: 0 auto;
-      padding: 2.5rem 1.25rem 4rem;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.4rem, 3vw, 2.4rem);
     }
     h1 {
-      font-size: clamp(2rem, 4.5vw, 2.75rem);
-      line-height: 1.15;
-      margin: 0 0 0.75rem;
-      letter-spacing: -0.02em;
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(2.1rem, 4.5vw, 2.9rem);
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      margin: 0 0 0.8rem;
     }
     h2 {
-      font-size: 1.5rem;
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: 1.55rem;
       line-height: 1.25;
-      margin: 2.25rem 0 0.75rem;
+      margin: 2.4rem 0 0.7rem;
+      letter-spacing: -0.02em;
     }
     h3 {
-      font-size: 1.125rem;
-      line-height: 1.35;
-      margin: 1.35rem 0 0.5rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.55rem;
     }
-    p, li { color: var(--ink); font-size: 1rem; }
     .lede {
       color: var(--muted);
       font-size: 1.125rem;
-      margin: 0 0 1.5rem;
+      max-width: 42rem;
+      margin: 0 0 1.25rem;
     }
-    a { color: var(--accent); }
-    ul { padding-left: 1.2rem; }
-    li { margin: 0.35rem 0; }
-    footer {
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1.25rem 0 0.25rem;
+      padding: 0.85rem 1rem;
+      background: var(--accent-soft);
+      border-radius: 12px;
+    }
+    .progress {
+      font-weight: 600;
+      color: var(--ok);
+      font-variant-numeric: tabular-nums;
+    }
+    .toolbar button {
+      appearance: none;
+      border: 1px solid #b7d2c7;
+      background: #fff;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .toolbar button:hover { background: #f7fbf9; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0 1rem;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.7rem 0.65rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .checks { list-style: none; padding: 0; margin: 0.4rem 0 0; }
+    .checks li {
+      display: grid;
+      grid-template-columns: 1.3rem minmax(0, 1fr);
+      gap: 0.65rem;
+      align-items: start;
+      padding: 0.55rem 0.35rem;
+      border-bottom: 1px solid #eef2f5;
+    }
+    .checks li:last-child { border-bottom: 0; }
+    .checks input {
+      margin-top: 0.28rem;
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--accent);
+    }
+    .checks label { cursor: pointer; }
+    .checks li.done label { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+    .callout {
+      margin: 1rem 0;
+      padding: 0.95rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fafcfd;
+    }
+    footer.doc-foot {
       margin-top: 2.5rem;
-      padding-top: 1rem;
+      padding-top: 1.1rem;
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 0.95rem;
     }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; }
+      .side {
+        position: relative;
+        height: auto;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .side nav { grid-template-columns: 1fr 1fr; }
+      .content { padding: 1rem 0.85rem 3rem; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>OTP / SMS Verification Testing Checklist</h1>
-    <p class="lede">A practical, vendor-neutral checklist for QA engineers and developers who test SMS one-time-passcode (OTP) flows in staging before release.</p>
+  <div class="shell">
+    <aside class="side" aria-label="Document navigation">
+      <div class="brand">
+        <strong>GetVerifyCode</strong>
+        <span>OTP testing docs</span>
+      </div>
+      <nav>
+        <a href="#why">Why this exists</a>
+        <a href="#how">How to use it</a>
+        <a href="#checklist">Checklist</a>
+        <a href="#inbound">Real inbound SMS</a>
+        <a href="#pass">Pass criteria</a>
+        <a href="#source">Source repo</a>
+      </nav>
+      <div class="meta">
+        <p>Also on GitHub:<br><a href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">otp-sms-testing-checklist</a></p>
+        <p>Product site:<br><a href="https://getverifycode.com/">getverifycode.com</a></p>
+      </div>
+    </aside>
 
-    <h2>Why this exists</h2>
-    <p>SMS verification breaks in small ways: codes arrive late, expire early, get rate-limited, or fail on certain country formats. Most of these bugs only show up with real inbound SMS, not mocks.</p>
+    <div class="content">
+      <article class="doc">
+        <h1>OTP / SMS Verification Testing Checklist</h1>
+        <p class="lede">A practical, vendor-neutral checklist for QA engineers and developers who test SMS one-time-passcode flows in staging before release.</p>
 
-    <h2>Checklist</h2>
+        <div class="toolbar" aria-live="polite">
+          <div class="progress"><span id="done-count">0</span> / <span id="total-count">0</span> checks complete</div>
+          <div>
+            <button type="button" id="reset-checks">Reset</button>
+          </div>
+        </div>
 
-    <h3>Input and formatting</h3>
-    <ul>
-      <li>Accepts E.164 numbers (<code>+14155550100</code>) and strips spaces/dashes</li>
-      <li>Country picker matches the dialing code actually sent to the SMS provider</li>
-      <li>Clear error for numbers your provider cannot deliver to</li>
-    </ul>
+        <h2 id="why">Why this exists</h2>
+        <p>SMS verification breaks in small ways: codes arrive late, expire early, get rate-limited, or fail on certain country formats. Most of these bugs only show up with real inbound SMS, not mocks.</p>
+        <table>
+          <thead>
+            <tr><th>Failure mode</th><th>What users see</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Slow delivery</td><td>Code never appears before they abandon</td></tr>
+            <tr><td>Early expiry</td><td>“Invalid or expired code” after a resend</td></tr>
+            <tr><td>Rate limits</td><td>Temporary blocks after spam-clicking resend</td></tr>
+            <tr><td>Format mismatch</td><td>Country picker and dialing code disagree</td></tr>
+            <tr><td>Log leaks</td><td>OTP strings land in analytics or error trackers</td></tr>
+          </tbody>
+        </table>
 
-    <h3>Delivery</h3>
-    <ul>
-      <li>Code arrives within your target time (measure p50 / p95)</li>
-      <li>Resend button has a cooldown and shows a countdown</li>
-      <li>Message text includes app name and the code; no links in OTP SMS</li>
-      <li>Works with alphanumeric sender IDs and short codes where relevant</li>
-    </ul>
+        <h2 id="how">How to use it</h2>
+        <ol>
+          <li>Work through the checklist on a staging build that can send real SMS.</li>
+          <li>Record p50 / p95 delivery time for at least one country.</li>
+          <li>Fail the release if any security or privacy item is unchecked.</li>
+          <li>Prefer passkeys or authenticator apps for high-risk actions once the SMS path is proven.</li>
+        </ol>
 
-    <h3>Validation</h3>
-    <ul>
-      <li>Code expires after the documented window (e.g. 5–10 min)</li>
-      <li>Old code is rejected after a resend</li>
-      <li>Attempts are rate-limited; lockout message is understandable</li>
-      <li>Codes are single-use</li>
-    </ul>
+        <h2 id="checklist">Checklist</h2>
 
-    <h3>Security and privacy</h3>
-    <ul>
-      <li>OTPs never appear in logs, analytics or error trackers</li>
-      <li>Verification endpoints are rate-limited per number and per IP</li>
-      <li>Consider stronger factors (passkeys, authenticator apps) for high-risk actions</li>
-    </ul>
+        <h3>Input and formatting</h3>
+        <ul class="checks" data-group="input"></ul>
 
-    <h2>Testing with real inbound SMS</h2>
-    <p>For end-to-end tests across countries you can use temporary inbound numbers. See the <a href="https://getverifycode.com/blog/qa-checklist-sms-otp-testing">QA checklist write-up</a> and the <a href="https://getverifycode.com/blog/sms-verification-api-developers">SMS verification API guide</a>. Only test apps you own or are authorized to test.</p>
+        <h3>Delivery</h3>
+        <ul class="checks" data-group="delivery"></ul>
 
-    <h2>Source</h2>
-    <p>Also published as a GitHub repository: <a href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">GetVerifyCode/otp-sms-testing-checklist</a>.</p>
+        <h3>Validation</h3>
+        <ul class="checks" data-group="validation"></ul>
 
-    <footer>
-      Maintained by <a href="https://getverifycode.com/">GetVerifyCode</a>.
-      Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
-    </footer>
-  </main>
+        <h3>Security and privacy</h3>
+        <ul class="checks" data-group="security"></ul>
+
+        <h2 id="inbound">Testing with real inbound SMS</h2>
+        <p>For end-to-end tests across countries, temporary inbound numbers help you exercise live carrier routes without tying QA to personal SIMs.</p>
+        <div class="callout">
+          <p>See the <a href="https://getverifycode.com/blog/qa-checklist-sms-otp-testing">QA checklist write-up</a> and the <a href="https://getverifycode.com/blog/sms-verification-api-developers">SMS verification API guide</a>. Only test apps you own or are authorized to test.</p>
+        </div>
+
+        <h2 id="pass">Pass criteria</h2>
+        <p>Treat the release as not ready if any security or privacy box is unchecked, if p95 delivery exceeds your product SLO, or if resend does not invalidate the previous code.</p>
+
+        <h2 id="source">Source</h2>
+        <p>Source of truth: <a href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">GetVerifyCode/otp-sms-testing-checklist</a>.</p>
+
+        <footer class="doc-foot">
+          Maintained by <a href="https://getverifycode.com/">GetVerifyCode</a>.
+          Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+        </footer>
+      </article>
+    </div>
+  </div>
+
+  <script>
+    const groups = {
+      input: [
+        "Accepts E.164 numbers (+14155550100) and strips spaces / dashes",
+        "Country picker matches the dialing code actually sent to the SMS provider",
+        "Clear error for numbers your provider cannot deliver to",
+        "Leading zeros are handled correctly for the selected country"
+      ],
+      delivery: [
+        "Code arrives within your target time (measure p50 / p95)",
+        "Resend button has a cooldown and shows a countdown",
+        "Message text includes the app name and the code",
+        "OTP SMS contains no tracking links",
+        "Works with alphanumeric sender IDs and short codes where relevant"
+      ],
+      validation: [
+        "Code expires after the documented window (for example 5–10 minutes)",
+        "Old code is rejected after a resend",
+        "Attempts are rate-limited; lockout copy is understandable",
+        "Codes are single-use",
+        "Clock skew on the device does not silently invalidate fresh codes"
+      ],
+      security: [
+        "OTPs never appear in logs, analytics, or error trackers",
+        "Verification endpoints are rate-limited per number and per IP",
+        "Codes are stored hashed (or equivalent) with a hard expiry",
+        "Stronger factors (passkeys, authenticator apps) are offered for high-risk actions"
+      ]
+    };
+
+    const storageKey = "gvc-otp-checklist-v1";
+    const state = JSON.parse(localStorage.getItem(storageKey) || "{}");
+
+    function save() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const boxes = [...document.querySelectorAll('.checks input[type="checkbox"]')];
+      const done = boxes.filter((b) => b.checked).length;
+      document.getElementById("done-count").textContent = String(done);
+      document.getElementById("total-count").textContent = String(boxes.length);
+    }
+
+    function render() {
+      Object.entries(groups).forEach(([group, items]) => {
+        const list = document.querySelector('.checks[data-group="' + group + '"]');
+        list.innerHTML = "";
+        items.forEach((text, index) => {
+          const id = group + "-" + index;
+          const li = document.createElement("li");
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.id = id;
+          input.checked = Boolean(state[id]);
+          if (input.checked) li.classList.add("done");
+          input.addEventListener("change", () => {
+            state[id] = input.checked;
+            li.classList.toggle("done", input.checked);
+            save();
+          });
+          const label = document.createElement("label");
+          label.htmlFor = id;
+          label.textContent = text;
+          li.append(input, label);
+          list.append(li);
+        });
+      });
+      updateProgress();
+    }
+
+    document.getElementById("reset-checks").addEventListener("click", () => {
+      Object.keys(state).forEach((key) => delete state[key]);
+      save();
+      render();
+    });
+
+    render();
+  </script>
 </body>
 </html>

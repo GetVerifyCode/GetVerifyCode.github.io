@@ -27,24 +27,23 @@
       --accent: #3f72af;
       --accent-hover: #112d4e;
       --accent-soft: #dbe2ef;
-      --success: #1f7a4d;
       --focus: #3f72af;
-      --shadow: 0 1px 2px rgb(17 45 78 / 0.06), 0 10px 28px rgb(63 114 175 / 0.12);
-      --radius: 14px;
       --font: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+      --measure: 72rem;
+      --read: 48rem;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: var(--font);
-      font-size: 1rem;
+      font-size: 1.05rem;
       color: var(--ink);
       background:
-        radial-gradient(900px 420px at 12% -10%, rgb(63 114 175 / 0.18), transparent 60%),
-        radial-gradient(700px 380px at 100% 0%, rgb(17 45 78 / 0.08), transparent 55%),
+        radial-gradient(1100px 480px at 8% -18%, rgb(63 114 175 / 0.16), transparent 58%),
+        radial-gradient(900px 420px at 100% 0%, rgb(17 45 78 / 0.07), transparent 52%),
         var(--atmosphere);
-      line-height: 1.6;
+      line-height: 1.65;
     }
     ::selection { background: rgb(63 114 175 / 0.25); color: var(--ink); }
     a { color: var(--accent); text-underline-offset: 0.18em; }
@@ -54,120 +53,158 @@
       outline-offset: 2px;
     }
 
-    .shell {
-      display: grid;
-      grid-template-columns: 240px minmax(0, 1fr);
-      min-height: 100vh;
-    }
-    .side {
+    .top {
       background: var(--header);
       color: var(--header-ink);
-      padding: 1.35rem 1rem 2rem;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: auto;
+    }
+    .top-inner {
+      max-width: var(--measure);
+      margin: 0 auto;
+      padding: 0.95rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem 1.5rem;
+      align-items: center;
+      justify-content: space-between;
     }
     .brand {
-      display: grid;
-      gap: 0.2rem;
-      margin-bottom: 1.5rem;
-      padding: 0.15rem 0.35rem 0.85rem;
-      border-bottom: 1px solid rgb(255 255 255 / 0.22);
-    }
-    .brand strong {
-      font-size: 1.2rem;
+      font-size: 1.35rem;
       font-weight: 800;
       letter-spacing: -0.03em;
-      line-height: 1.2;
-    }
-    .brand span {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: rgb(255 255 255 / 0.82);
-    }
-    .side nav { display: grid; gap: 0.2rem; }
-    .side a {
-      color: rgb(255 255 255 / 0.92);
+      color: inherit;
       text-decoration: none;
-      padding: 0.5rem 0.6rem;
-      border-radius: 10px;
+      line-height: 1.15;
+    }
+    .brand:hover { color: #fff; }
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1rem;
       font-size: 0.92rem;
       font-weight: 500;
     }
-    .side a:hover {
-      background: rgb(17 45 78 / 0.22);
-      color: #fff;
+    .top-links a {
+      color: rgb(255 255 255 / 0.92);
+      text-decoration: none;
     }
-    .side .meta {
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgb(255 255 255 / 0.22);
-      font-size: 0.8rem;
-      color: rgb(255 255 255 / 0.8);
-      display: grid;
-      gap: 0.75rem;
-    }
-    .side .meta a {
+    .top-links a:hover {
       color: #fff;
-      padding: 0;
       text-decoration: underline;
-      text-underline-offset: 0.16em;
     }
 
-    .content {
-      min-width: 0;
-      padding: 1.25rem 1.25rem 3rem;
+    .hero {
+      max-width: var(--measure);
+      margin: 0 auto;
+      padding: 2.4rem 1.25rem 1.35rem;
     }
-    .doc {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid rgb(17 45 78 / 0.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.25rem 1.25rem 1.75rem;
-    }
-    h1 {
-      font-size: clamp(1.85rem, 3.4vw, 2.55rem);
+    .hero h1 {
+      font-size: clamp(2rem, 4.2vw, 3rem);
       font-weight: 800;
-      line-height: 1.12;
+      line-height: 1.08;
       letter-spacing: -0.035em;
-      margin: 0 0 0.65rem;
+      margin: 0 0 0.85rem;
+      max-width: 16ch;
     }
-    h2 {
-      font-size: clamp(1.25rem, 2vw, 1.55rem);
-      font-weight: 700;
-      line-height: 1.25;
-      letter-spacing: -0.025em;
-      margin: 2rem 0 0.65rem;
-    }
-    h3 {
-      font-size: 1.02rem;
-      font-weight: 700;
-      margin: 1.35rem 0 0.45rem;
-      color: var(--ink);
-    }
-    .lede {
+    .hero .lede {
+      margin: 0;
+      max-width: 42rem;
       color: var(--ink-muted);
-      font-size: 1.05rem;
-      margin: 0 0 1rem;
-      max-width: none;
+      font-size: 1.12rem;
     }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.25rem;
+    }
+    .btn {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      padding: 0.62rem 1.05rem;
+      font: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: rgb(17 45 78 / 0.18);
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent-hover);
+    }
+
+    .layout {
+      max-width: var(--measure);
+      margin: 0 auto;
+      padding: 0 1.25rem 3.5rem;
+      display: grid;
+      grid-template-columns: 11.5rem minmax(0, 1fr);
+      gap: 2rem;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 1rem;
+      padding-top: 0.35rem;
+    }
+    .toc p {
+      margin: 0 0 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+    .toc nav {
+      display: grid;
+      gap: 0.15rem;
+    }
+    .toc a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.28rem 0;
+      border-left: 2px solid transparent;
+      padding-left: 0.65rem;
+      margin-left: -0.65rem;
+    }
+    .toc a:hover {
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+
+    .main { min-width: 0; max-width: var(--read); }
     .toolbar {
       display: flex;
       flex-wrap: wrap;
       gap: 0.65rem;
       align-items: center;
       justify-content: space-between;
-      margin: 0.85rem 0 0.15rem;
-      padding: 0.75rem 0.9rem;
+      margin: 0 0 1.75rem;
+      padding: 0.85rem 1rem;
       background: var(--accent-soft);
       border: 1px solid rgb(63 114 175 / 0.22);
       border-radius: 12px;
     }
     .progress {
       font-weight: 700;
-      color: var(--ink);
       font-variant-numeric: tabular-nums;
     }
     .toolbar button {
@@ -175,7 +212,7 @@
       border: 1px solid rgb(63 114 175 / 0.35);
       background: #fff;
       color: var(--ink);
-      border-radius: 999px;
+      border-radius: 10px;
       padding: 0.42rem 0.9rem;
       font: inherit;
       font-size: 0.88rem;
@@ -187,37 +224,52 @@
       border-color: var(--accent);
       color: #fff;
     }
+
+    h2 {
+      font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      margin: 2.35rem 0 0.7rem;
+      scroll-margin-top: 1.25rem;
+    }
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 1.45rem 0 0.5rem;
+    }
+    p { margin: 0 0 0.95rem; }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 0.65rem 0 0.85rem;
+      margin: 0.5rem 0 1rem;
       font-size: 0.95rem;
     }
     th, td {
       text-align: left;
-      padding: 0.7rem 0.55rem;
+      padding: 0.7rem 0.45rem;
       border-bottom: 1px solid var(--line);
       vertical-align: top;
     }
     th {
       color: var(--ink-muted);
       font-weight: 700;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
-    .checks { list-style: none; padding: 0; margin: 0.25rem 0 0; }
+    .checks { list-style: none; padding: 0; margin: 0.15rem 0 0.35rem; }
     .checks li {
       display: grid;
       grid-template-columns: 1.25rem minmax(0, 1fr);
-      gap: 0.65rem;
+      gap: 0.7rem;
       align-items: start;
-      padding: 0.55rem 0.2rem;
-      border-bottom: 1px solid rgb(219 226 239 / 0.9);
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgb(219 226 239 / 0.95);
     }
     .checks li:last-child { border-bottom: 0; }
     .checks input {
-      margin-top: 0.28rem;
+      margin-top: 0.3rem;
       width: 1.05rem;
       height: 1.05rem;
       accent-color: var(--accent);
@@ -228,58 +280,75 @@
       text-decoration: line-through;
       text-decoration-thickness: 1px;
     }
-    .callout {
-      margin: 0.85rem 0;
-      padding: 0.9rem 1rem;
-      border: 1px solid rgb(63 114 175 / 0.25);
-      border-radius: 12px;
+    .note {
+      margin: 1rem 0;
+      padding: 0.95rem 1.05rem;
       background: var(--accent-soft);
+      border-radius: 12px;
     }
-    .callout p { margin: 0; }
-    ol { padding-left: 1.2rem; }
-    ol li { margin: 0.35rem 0; }
-    footer.doc-foot {
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--line);
+    .note p { margin: 0; }
+    ol { padding-left: 1.2rem; margin: 0 0 1rem; }
+    ol li { margin: 0.4rem 0; }
+    footer.site-foot {
+      max-width: var(--measure);
+      margin: 0 auto;
+      padding: 0 1.25rem 2.75rem;
       color: var(--ink-muted);
       font-size: 0.92rem;
     }
-
-    @media (max-width: 860px) {
-      .shell { grid-template-columns: 1fr; }
-      .side {
-        position: relative;
-        height: auto;
-      }
-      .side nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.35rem;
-      }
-      .side a {
-        background: rgb(17 45 78 / 0.16);
-        padding: 0.4rem 0.65rem;
-        font-size: 0.84rem;
-      }
-      .content { padding: 0.85rem 0.75rem 2.5rem; }
-      .doc { padding: 1rem 0.9rem 1.4rem; border-radius: 12px; }
-      table { display: block; overflow-x: auto; }
+    footer.site-foot .inner {
+      max-width: var(--read);
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
     }
 
-    @media (min-width: 1200px) {
-      .content { padding: 1.5rem 1.75rem 3.5rem; }
-      .doc { padding: 1.5rem 1.75rem 2rem; }
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; gap: 0.5rem; }
+      .toc {
+        position: relative;
+        top: 0;
+        margin-bottom: 0.75rem;
+      }
+      .toc nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem 0.85rem;
+      }
+      .toc a {
+        border-left: 0;
+        margin-left: 0;
+        padding-left: 0;
+        color: var(--accent);
+      }
+      .hero { padding-top: 1.75rem; }
+      .hero h1 { max-width: none; }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <aside class="side" aria-label="Document navigation">
-      <div class="brand">
-        <strong>GetVerifyCode</strong>
-        <span>OTP testing docs</span>
-      </div>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="https://getverifycode.com/">GetVerifyCode</a>
+      <nav class="top-links" aria-label="Related">
+        <a href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">GitHub repo</a>
+        <a href="https://getverifycode.gitbook.io/getverifycode-docs/">Guides</a>
+        <a href="https://getverifycode.com/">Product</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>OTP / SMS verification testing checklist</h1>
+    <p class="lede">Vendor-neutral QA for engineers who ship SMS one-time codes. Use it in staging with real inbound SMS, when mocks are not enough.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#checklist">Open checklist</a>
+      <a class="btn btn-ghost" href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">View source on GitHub</a>
+    </div>
+  </section>
+
+  <div class="layout">
+    <aside class="toc" aria-label="On this page">
+      <p>On this page</p>
       <nav>
         <a href="#why">Why this exists</a>
         <a href="#how">How to use it</a>
@@ -287,98 +356,86 @@
         <a href="#matrix">Test matrix</a>
         <a href="#inbound">Real inbound SMS</a>
         <a href="#pass">Pass criteria</a>
-        <a href="#source">Source repo</a>
       </nav>
-      <div class="meta">
-        <p>GitHub<br><a href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">otp-sms-testing-checklist</a></p>
-        <p>Product<br><a href="https://getverifycode.com/">getverifycode.com</a></p>
-      </div>
     </aside>
 
-    <div class="content">
-      <article class="doc">
-        <h1>OTP / SMS Verification Testing Checklist</h1>
-        <p class="lede">Vendor-neutral QA checklist for engineers who ship SMS one-time-passcode flows. Use it in staging before release, when mocks are not enough.</p>
+    <article class="main">
+      <div class="toolbar" aria-live="polite">
+        <div class="progress"><span id="done-count">0</span> / <span id="total-count">0</span> checks complete</div>
+        <button type="button" id="reset-checks">Reset</button>
+      </div>
 
-        <div class="toolbar" aria-live="polite">
-          <div class="progress"><span id="done-count">0</span> / <span id="total-count">0</span> checks complete</div>
-          <div>
-            <button type="button" id="reset-checks">Reset</button>
-          </div>
-        </div>
+      <h2 id="why">Why this exists</h2>
+      <p>SMS verification breaks in small ways: codes arrive late, expire early, get rate-limited, or fail on certain country formats. Most of these bugs only show up with real inbound SMS, not mocks.</p>
+      <table>
+        <thead>
+          <tr><th>Failure mode</th><th>What users see</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Slow delivery</td><td>Code never appears before they abandon</td></tr>
+          <tr><td>Early expiry</td><td>“Invalid or expired code” after a resend</td></tr>
+          <tr><td>Rate limits</td><td>Temporary blocks after spam-clicking resend</td></tr>
+          <tr><td>Format mismatch</td><td>Country picker and dialing code disagree</td></tr>
+          <tr><td>Log leaks</td><td>OTP strings land in analytics or error trackers</td></tr>
+        </tbody>
+      </table>
 
-        <h2 id="why">Why this exists</h2>
-        <p>SMS verification breaks in small ways: codes arrive late, expire early, get rate-limited, or fail on certain country formats. Most of these bugs only show up with real inbound SMS, not mocks.</p>
-        <table>
-          <thead>
-            <tr><th>Failure mode</th><th>What users see</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Slow delivery</td><td>Code never appears before they abandon</td></tr>
-            <tr><td>Early expiry</td><td>“Invalid or expired code” after a resend</td></tr>
-            <tr><td>Rate limits</td><td>Temporary blocks after spam-clicking resend</td></tr>
-            <tr><td>Format mismatch</td><td>Country picker and dialing code disagree</td></tr>
-            <tr><td>Log leaks</td><td>OTP strings land in analytics or error trackers</td></tr>
-          </tbody>
-        </table>
+      <h2 id="how">How to use it</h2>
+      <ol>
+        <li>Work through the checklist on a staging build that can send real SMS.</li>
+        <li>Record p50 / p95 delivery time for at least one country.</li>
+        <li>Fail the release if any security or privacy item is unchecked.</li>
+        <li>Prefer passkeys or authenticator apps for high-risk actions once the SMS path is proven.</li>
+      </ol>
 
-        <h2 id="how">How to use it</h2>
-        <ol>
-          <li>Work through the checklist on a staging build that can send real SMS.</li>
-          <li>Record p50 / p95 delivery time for at least one country.</li>
-          <li>Fail the release if any security or privacy item is unchecked.</li>
-          <li>Prefer passkeys or authenticator apps for high-risk actions once the SMS path is proven.</li>
-        </ol>
+      <h2 id="checklist">Checklist</h2>
 
-        <h2 id="checklist">Checklist</h2>
+      <h3>Input and formatting</h3>
+      <ul class="checks" data-group="input"></ul>
 
-        <h3>Input and formatting</h3>
-        <ul class="checks" data-group="input"></ul>
+      <h3>Delivery</h3>
+      <ul class="checks" data-group="delivery"></ul>
 
-        <h3>Delivery</h3>
-        <ul class="checks" data-group="delivery"></ul>
+      <h3>Validation</h3>
+      <ul class="checks" data-group="validation"></ul>
 
-        <h3>Validation</h3>
-        <ul class="checks" data-group="validation"></ul>
+      <h3>Security and privacy</h3>
+      <ul class="checks" data-group="security"></ul>
 
-        <h3>Security and privacy</h3>
-        <ul class="checks" data-group="security"></ul>
+      <h2 id="matrix">Suggested test matrix</h2>
+      <p>Run at least one happy path and one failure path per row before release.</p>
+      <table>
+        <thead>
+          <tr><th>Scenario</th><th>Assert</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Domestic long number</td><td>Code arrives within SLO; E.164 paste works</td></tr>
+          <tr><td>International number</td><td>Country picker and dial code stay aligned</td></tr>
+          <tr><td>Immediate resend</td><td>Cooldown shows; previous code is rejected</td></tr>
+          <tr><td>Expired code</td><td>Clear expired/invalid message; new code works</td></tr>
+          <tr><td>Provider reject</td><td>Readable error; no silent hang</td></tr>
+          <tr><td>Log / analytics spot check</td><td>OTP string never appears in events or traces</td></tr>
+        </tbody>
+      </table>
 
-        <h2 id="matrix">Suggested test matrix</h2>
-        <p>Run at least one happy path and one failure path per row before release.</p>
-        <table>
-          <thead>
-            <tr><th>Scenario</th><th>Assert</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Domestic long number</td><td>Code arrives within SLO; E.164 paste works</td></tr>
-            <tr><td>International number</td><td>Country picker and dial code stay aligned</td></tr>
-            <tr><td>Immediate resend</td><td>Cooldown shows; previous code is rejected</td></tr>
-            <tr><td>Expired code</td><td>Clear expired/invalid message; new code works</td></tr>
-            <tr><td>Provider reject</td><td>Readable error; no silent hang</td></tr>
-            <tr><td>Log / analytics spot check</td><td>OTP string never appears in events or traces</td></tr>
-          </tbody>
-        </table>
+      <h2 id="inbound">Testing with real inbound SMS</h2>
+      <p>Temporary inbound numbers help you exercise live carrier routes across countries without tying QA to personal SIMs.</p>
+      <div class="note">
+        <p>See the <a href="https://getverifycode.com/blog/qa-checklist-sms-otp-testing">QA checklist write-up</a> and the <a href="https://getverifycode.com/blog/sms-verification-api-developers">SMS verification API guide</a>. Only test apps you own or are authorized to test.</p>
+      </div>
 
-        <h2 id="inbound">Testing with real inbound SMS</h2>
-        <p>For end-to-end tests across countries, temporary inbound numbers help you exercise live carrier routes without tying QA to personal SIMs.</p>
-        <div class="callout">
-          <p>See the <a href="https://getverifycode.com/blog/qa-checklist-sms-otp-testing">QA checklist write-up</a> and the <a href="https://getverifycode.com/blog/sms-verification-api-developers">SMS verification API guide</a>. Only test apps you own or are authorized to test.</p>
-        </div>
-
-        <h2 id="pass">Pass criteria</h2>
-        <p>Treat the release as not ready if any security or privacy box is unchecked, if p95 delivery exceeds your product SLO, or if resend does not invalidate the previous code.</p>
-
-        <h2 id="source">Source</h2>
-        <p>Source of truth: <a href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">GetVerifyCode/otp-sms-testing-checklist</a>. Plain checklist copy also lives in <code>CHECKLIST.md</code>.</p>
-
-        <footer class="doc-foot">
-          Maintained by <a href="https://getverifycode.com/">GetVerifyCode</a>.
-          Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
-        </footer>
-      </article>
-    </div>
+      <h2 id="pass">Pass criteria</h2>
+      <p>Treat the release as not ready if any security or privacy box is unchecked, if p95 delivery exceeds your product SLO, or if resend does not invalidate the previous code.</p>
+    </article>
   </div>
+
+  <footer class="site-foot">
+    <div class="inner">
+      Maintained by <a href="https://getverifycode.com/">GetVerifyCode</a>.
+      Source: <a href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">otp-sms-testing-checklist</a>.
+      Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+    </div>
+  </footer>
 
   <script>
     const groups = {
@@ -396,7 +453,7 @@
         "Works with alphanumeric sender IDs and short codes where relevant"
       ],
       validation: [
-        "Code expires after the documented window (for example 5–10 minutes)",
+        "Code expires after the documented window (for example 5 to 10 minutes)",
         "Old code is rejected after a resend",
         "Attempts are rate-limited; lockout copy is understandable",
         "Codes are single-use",

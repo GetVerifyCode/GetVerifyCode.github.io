@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OTP / SMS Verification Testing Checklist | GetVerifyCode</title>
+  <meta name="description" content="A practical, vendor-neutral checklist for QA engineers and developers who test SMS one-time-passcode (OTP) flows in staging before release.">
+  <link rel="canonical" href="https://getverifycode.github.io/">
+  <style>
+    :root {
+      --ink: #14212b;
+      --muted: #5a6b76;
+      --line: #d7dee3;
+      --paper: #f7f9fa;
+      --accent: #0b6e4f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 1rem;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef3f6 0%, var(--paper) 220px, #fff 100%);
+      line-height: 1.55;
+    }
+    main {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      line-height: 1.15;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-size: 1.5rem;
+      line-height: 1.25;
+      margin: 2.25rem 0 0.75rem;
+    }
+    h3 {
+      font-size: 1.125rem;
+      line-height: 1.35;
+      margin: 1.35rem 0 0.5rem;
+    }
+    p, li { color: var(--ink); font-size: 1rem; }
+    .lede {
+      color: var(--muted);
+      font-size: 1.125rem;
+      margin: 0 0 1.5rem;
+    }
+    a { color: var(--accent); }
+    ul { padding-left: 1.2rem; }
+    li { margin: 0.35rem 0; }
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>OTP / SMS Verification Testing Checklist</h1>
+    <p class="lede">A practical, vendor-neutral checklist for QA engineers and developers who test SMS one-time-passcode (OTP) flows in staging before release.</p>
+
+    <h2>Why this exists</h2>
+    <p>SMS verification breaks in small ways: codes arrive late, expire early, get rate-limited, or fail on certain country formats. Most of these bugs only show up with real inbound SMS, not mocks.</p>
+
+    <h2>Checklist</h2>
+
+    <h3>Input and formatting</h3>
+    <ul>
+      <li>Accepts E.164 numbers (<code>+14155550100</code>) and strips spaces/dashes</li>
+      <li>Country picker matches the dialing code actually sent to the SMS provider</li>
+      <li>Clear error for numbers your provider cannot deliver to</li>
+    </ul>
+
+    <h3>Delivery</h3>
+    <ul>
+      <li>Code arrives within your target time (measure p50 / p95)</li>
+      <li>Resend button has a cooldown and shows a countdown</li>
+      <li>Message text includes app name and the code; no links in OTP SMS</li>
+      <li>Works with alphanumeric sender IDs and short codes where relevant</li>
+    </ul>
+
+    <h3>Validation</h3>
+    <ul>
+      <li>Code expires after the documented window (e.g. 5–10 min)</li>
+      <li>Old code is rejected after a resend</li>
+      <li>Attempts are rate-limited; lockout message is understandable</li>
+      <li>Codes are single-use</li>
+    </ul>
+
+    <h3>Security and privacy</h3>
+    <ul>
+      <li>OTPs never appear in logs, analytics or error trackers</li>
+      <li>Verification endpoints are rate-limited per number and per IP</li>
+      <li>Consider stronger factors (passkeys, authenticator apps) for high-risk actions</li>
+    </ul>
+
+    <h2>Testing with real inbound SMS</h2>
+    <p>For end-to-end tests across countries you can use temporary inbound numbers. See the <a href="https://getverifycode.com/blog/qa-checklist-sms-otp-testing">QA checklist write-up</a> and the <a href="https://getverifycode.com/blog/sms-verification-api-developers">SMS verification API guide</a>. Only test apps you own or are authorized to test.</p>
+
+    <h2>Source</h2>
+    <p>Also published as a GitHub repository: <a href="https://github.com/GetVerifyCode/otp-sms-testing-checklist">GetVerifyCode/otp-sms-testing-checklist</a>.</p>
+
+    <footer>
+      Maintained by <a href="https://getverifycode.com/">GetVerifyCode</a>.
+      Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+    </footer>
+  </main>
+</body>
+</html>
